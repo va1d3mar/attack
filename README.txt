@@ -14,6 +14,10 @@ Also will be nice to install:
                               tmux
                               cbm
 
+Launching like bash attack.sh 'put attack command from chat here' threads
+               |   command   ||    arguments will be changed    || 3100 |
+                                                            ((cores-1)*1000)+100
+                                                            
 Use ROOT to launch, not sudo, because systemctl is used inside. 
 When you are using sudo it'll brake execution as soon as sudo session expires.
 Find logfile at /var/log/attack.log if you need so. Tail -f will give some local lulz.
