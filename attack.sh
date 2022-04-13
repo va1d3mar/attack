@@ -3,8 +3,7 @@ logfile="/var/log/attack.log"
 command=$1  
 parameter=$2
 if [ $command = "halt" ]; then
-        tmux kill-session && pkill -KILL python3 && pkill -KILL docker && pkill -KILL bash && systemctl restart docker.service
-        echo "$(date "+%d.%m.%Y %H:%M:%S")" "Роботу припинено користувачем за командою halt" >> $logfile
+        tmux kill-session && pkill -KILL python3 && pkill -KILL docker && pkill -KILL bash && systemctl restart docker.service && echo "$(date "+%d.%m.%Y %H:%M:%S")" "Роботу припинено користувачем за командою halt" >> $logfile
 else
 tmux new-session -s attack -d
 tmux split-window -t attack -h -p 50
@@ -25,7 +24,7 @@ echo "$(date "+%d.%m.%Y %H:%M:%S")" "Остаточна команда: " "$comm
 while true
 do
 
-        echo "$(date "+%d.%m.%Y %H:%M:%S")" "Починаю роботу докер-контейнеру" >> $logfile & tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер запустився" >> $logfile & sleep 20 && echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер попрацював 900 тіків, перезапускаю, шоб не висло" >> $logfile && tmux send-keys -t 0 C-c Enter && tmux send-keys -t 0 "systemctl restart docker.service" Enter
+        echo "$(date "+%d.%m.%Y %H:%M:%S")" "Починаю роботу докер-контейнеру" >> $logfile & tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер запустився" >> $logfile & sleep 900 && echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер попрацював 900 тіків, перезапускаю, шоб не висло" >> $logfile && tmux send-keys -t 0 C-c Enter && tmux send-keys -t 0 "systemctl restart docker.service" Enter
 		echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер перезапущено, чекаю 5 тіків до перезапуску циклу, шоб встиг" >> $logfile
         sleep 5
 done
