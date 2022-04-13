@@ -9,7 +9,7 @@ then
 	pkill -KILL bash
 	systemctl restart docker.service
 fi
-tmux new-session -s attack -d
+tmux new-session -s attack
 tmux split-window -t attack -h -p 50
 tmux split-window -t attack -v -p 66
 tmux split-window -t attack -v -p 50
