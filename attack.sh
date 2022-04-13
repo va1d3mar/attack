@@ -4,6 +4,7 @@ command=$1
 parameter=$2
 if [ $command = "halt" ]; then
         tmux kill-session && pkill -KILL python3 && pkill -KILL docker && pkill -KILL bash && systemctl restart docker.service
+        echo "$(date "+%d.%m.%Y %H:%M:%S")" "Роботу припинено користувачем за командою halt" >> $logfile
 else
 tmux new-session -s attack -d
 tmux split-window -t attack -h -p 50
