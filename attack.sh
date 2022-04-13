@@ -23,6 +23,7 @@ echo "$(date "+%d.%m.%Y %H:%M:%S")" "Остаточна команда: " "$comm
 
 while true
 do
+
         echo "$(date "+%d.%m.%Y %H:%M:%S")" "Починаю роботу докер-контейнеру" >> $logfile & tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер запустився" >> $logfile & sleep 20 && echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер попрацював 900 тіків, перезапускаю, шоб не висло" >> $logfile && tmux send-keys -t 0 C-c Enter && tmux send-keys -t 0 "systemctl restart docker.service" Enter
 		echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер перезапущено, чекаю 5 тіків до перезапуску циклу, шоб встиг" >> $logfile
         sleep 5
