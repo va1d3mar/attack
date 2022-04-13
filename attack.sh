@@ -3,7 +3,7 @@ logfile="/var/log/attack.log"
 command=$1  
 parameter=$2
 if [ $command = "halt" ]; then
-        tmux kill-session && pkill -KILL python3 && pkill -KILL docker && pkill -KILL bash && systemctl restar>
+        tmux kill-session && pkill -KILL python3 && pkill -KILL docker && pkill -KILL bash && systemctl restart docker.service
 else
 tmux new-session -s attack -d
 tmux split-window -t attack -h -p 50
