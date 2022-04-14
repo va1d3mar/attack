@@ -19,21 +19,18 @@ function create_environment {
 
 function fill_environment {
         tmux select-window -t attack
-        tmux send-keys -t 1 C-z 'htop' Enter
-        tmux send-keys -t 2 C-z 'nload eth0' Enter
-        tmux send-keys -t 3 C-z 'tail -f ' "$logfile" Enter
+        tmux send-keys -t 1 'htop' Enter
+        tmux send-keys -t 2 'nload eth0' Enter
+        tmux send-keys -t 3 'tail -f ' "$logfile" Enter
 }
 
 function write_to_log {
         echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1" >> $logfile
-        echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1"
 }
 
 function kill_environment {
         tmux select-window -t attack
         tmux send-keys -t 0 C-c Enter
-        #pkill -KILL python3
-        #pkill -KILL docker
         tmux kill-session
         pkill -KILL bash
         systemctl restart docker.service
@@ -41,7 +38,7 @@ function kill_environment {
 
 
 function attack {
-        tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & sleep 20 && tmux send-keys -t 0 C-c Enter && sleep 5 && tmux send-keys -t 0 "systemctl restart docker.service" Enter
+        tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & sleep 20 && tmux send-keys -t 0 C-c Enter && sleep 10 && tmux send-keys -t 0 "systemctl restart docker.service" Enter
 }
 
 case $mode in
@@ -57,7 +54,7 @@ case $mode in
         do
                 write_to_log 'Розпочинаю цикл атаки'
                 attack
-                write_to_log 'Цикл атаки завершено, перезапускаю докер, шоб не висло'
+                write_to_log 'Цикл атаки завершено, докер перезапущено, шоб не висло'
         done
                 ;;
 
@@ -67,10 +64,16 @@ case $mode in
                 ;;
 
         change)
+        write_to_log 'Змінюю ціль'
+        prepare_command
+        kill_environment
+        create_environment
+        fill_environment
+        attack
+
                 ;;
 
         *)
-        #echo "Йа нєпанімаю ваш язік. Пішітє правельно!"
         write_to_log 'Йа нєпанімаю ваш язік. Пішітє правельно!'
         ;;
 esac
