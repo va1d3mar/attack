@@ -25,7 +25,8 @@ function fill_environment {
 }
 
 function write_to_log {
-        echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1" >> $logfile
+        #echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1" >> $logfile
+        echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1"
 }
 
 function kill_environment {
@@ -43,29 +44,33 @@ function attack {
 
 case $mode in
         attack)
-        write_to_log Аналізую команду
+        write_to_log 'Аналізую команду'
         prepare_command
-        write_to_log Команда відредагована
+        write_to_log 'Команда відредагована'
         kill_environment
-        write_to_log Завершення роботи оточення
+        write_to_log 'Завершення роботи оточення'
         create_environment
-        write_to_log Нове оточення створено
+        write_to_log 'Нове оточення створено'
         fill_environment
-        write_to_log Нове оточення наповнено
+        write_to_log 'Нове оточення наповнено'
         while true
         do
-                write_to_log Розпочинаю цикл атаки
+                write_to_log 'Розпочинаю цикл атаки'
                 attack
-                write_to_log Цикл атаки завершено, перезапускаю докер, шоб не висло
+                write_to_log 'Цикл атаки завершено, перезапускаю докер, шоб не висло'
                 ;;
+
         change)
                 ;;
+
         halt)
                 ;;
+
         change)
                 ;;
+
         *)
         echo "Йа нєпанімаю ваш язік. Пішітє правельно!"
-        write_to_log Йа нєпанімаю ваш язік. Пішітє правельно!
+        write_to_log 'Йа нєпанімаю ваш язік. Пішітє правельно!'
         ;;
 esac
