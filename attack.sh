@@ -43,8 +43,6 @@ case $mode in
         write_to_log 'Аналізую команду'
         prepare_command
         write_to_log 'Команда відредагована'
-        kill_environment
-        write_to_log 'Завершення роботи оточення'
         create_environment
         write_to_log 'Нове оточення створено'
         fill_environment
