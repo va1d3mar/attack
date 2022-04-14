@@ -65,12 +65,8 @@ case $mode in
 
         change)
         write_to_log 'Змінюю ціль'
-        prepare_command
         kill_environment
-        create_environment
-        fill_environment
         attack
-
                 ;;
 
         *)
