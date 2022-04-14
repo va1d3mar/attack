@@ -42,7 +42,7 @@ function attack {
 }
 
 case $mode in
-        attack )
+        attack)
         write_to_log("Аналізую команду")
         prepare_command()
         write_to_log("Команда відредагована")
@@ -58,13 +58,13 @@ case $mode in
                 attack()
                 write_to_log("Цикл атаки завершено, перезапускаю докер, шоб не висло")
                 ;;
-        change )
+        change)
                 ;;
-        halt )
+        halt)
                 ;;
-        change )
+        change)
                 ;;
-        * )
+        *)
         echo "Йа нєпанімаю ваш язік. Пішітє правельно!"
         write_to_log("Йа нєпанімаю ваш язік. Пішітє правельно!")
         ;;
