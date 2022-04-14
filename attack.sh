@@ -1,8 +1,8 @@
 clear
 logfile="/var/log/attack.log"
 mode=$1  
-parameter=$2
-command=$3
+command=$2
+parameter=$3
 
 function prepare_command {
         command=${command#"docker run -it --rm --pull always ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest "}
