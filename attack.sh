@@ -30,7 +30,11 @@ function write_to_log {
 }
 
 function kill_environment {
-        pkill -KILL bash && pkill -KILL python3 && pkill -KILL docker && tmux kill-session && systemctl restart docker.service
+        pkill -KILL bash
+        pkill -KILL python3
+        pkill -KILL docker
+        tmux kill-session
+        systemctl restart docker.service
 }
 
 
