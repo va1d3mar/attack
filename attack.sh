@@ -35,6 +35,7 @@ function kill_environment {
         tmux kill-session
         pkill -KILL bash
         systemctl restart docker.service
+        rm /var/tmp/attack_target
 }
 
 
