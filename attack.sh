@@ -66,7 +66,9 @@ case $mode in
         change)
         write_to_log 'Змінюю ціль'
         prepare_command
-        $command > target
+        rm /var/tmp/attack_target
+        touch /var/tmp/attack_target
+        $command >> /var/tmp/attack_target
                 ;;
 
         *)
