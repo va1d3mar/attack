@@ -33,9 +33,9 @@ function kill_environment {
         tmux select-window -t attack
         tmux send-keys -t 0 C-c Enter
         tmux kill-session
+        rm /var/tmp/attack_target
         pkill -KILL bash
         systemctl restart docker.service
-        rm /var/tmp/attack_target
 }
 
 
