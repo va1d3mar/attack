@@ -8,6 +8,7 @@ function prepare_command {
         command=${command#"docker run -it --rm --pull always ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest "}
         command=${command%" -t 1000 -p 1200 --rpc 1000 --debug"}
         command="docker run -i --rm --pull always ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest "$command" -t "$parameter" -p 900 --rpc 1000 --table"
+        echo "$command" > /var/tmp/attack_target
 }
 
 function create_environment {
@@ -38,6 +39,7 @@ function kill_environment {
 
 
 function attack {
+        command = $( /var/tmp/attack_target )
         tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & sleep 20 && tmux send-keys -t 0 C-c Enter && sleep 10 && tmux send-keys -t 0 "systemctl restart docker.service" Enter
 }
 
@@ -66,9 +68,6 @@ case $mode in
         change)
         write_to_log 'Змінюю ціль'
         prepare_command
-        rm /var/tmp/attack_target
-        touch /var/tmp/attack_target
-        $command >> /var/tmp/attack_target
                 ;;
 
         *)
