@@ -1,4 +1,4 @@
-lear
+clear
 logfile="/var/log/attack.log"
 mode=$1  
 parameter=$2
