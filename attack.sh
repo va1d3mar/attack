@@ -65,6 +65,8 @@ case $mode in
                 ;;
 
         halt)
+        write_to_log 'Завершення роботи оточення'
+        kill_environment
                 ;;
 
         change)
