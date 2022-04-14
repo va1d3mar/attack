@@ -58,6 +58,7 @@ case $mode in
                 write_to_log 'Розпочинаю цикл атаки'
                 attack
                 write_to_log 'Цикл атаки завершено, перезапускаю докер, шоб не висло'
+        done
                 ;;
 
         change)
