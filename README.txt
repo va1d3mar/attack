@@ -10,16 +10,19 @@ From year 2022 B.C. till ∞
 
 Need to install before launch:
                               docker
-Also will be nice to install:
                               tmux
-                              cbm
+                              nload
 
-Launching like bash attack.sh 'put attack command from chat here' threads
-               |   command   ||    arguments will be changed    || 3100 |
-                                                            ((cores-1)*1000)+100
-                                                            
-Use ROOT to launch, not sudo, because systemctl is used inside. 
-When you are using sudo it'll brake execution as soon as sudo session expires.
-Find logfile at /var/log/attack.log if you need so. Tail -f will give some local lulz.
+Launching under root only.
+bash attack.sh attack 'command' threads &
+               change 'command' threads &
+               halt
 
-Don't be afraid to use tmux to easily leave terminal not keeping eye on it.
+Use & inthe end of command to put execution to background.
+
+If you want to see what is going on: tmux a.
+If you want to put tmux to background: Ctrl+b then press 'd'.
+If you want to change target put tmux to background at first.
+If you want to come back: tmux a.
+
+Log is located at /var/log/attack.log
