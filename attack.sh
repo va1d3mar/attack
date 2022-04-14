@@ -25,16 +25,12 @@ function fill_environment {
 }
 
 function write_to_log {
-        #echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1" >> $logfile
+        echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1" >> $logfile
         echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1"
 }
 
 function kill_environment {
-        #pkill -KILL bash 
-        pkill -KILL python3 
-        pkill -KILL docker 
-        tmux kill-session
-        systemctl restart docker.service
+        pkill -KILL bash && pkill -KILL python3 && pkill -KILL docker && tmux kill-session && systemctl restart docker.service
 }
 
 
@@ -59,9 +55,6 @@ case $mode in
                 attack
                 write_to_log 'Цикл атаки завершено, перезапускаю докер, шоб не висло'
         done
-                ;;
-
-        change)
                 ;;
 
         halt)
