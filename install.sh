@@ -12,7 +12,8 @@ else
 	apt install docker-ce
 	clear
 	echo "Інсталяцію пакетів завершено, починаю завантаження скриптів атаки"
-	git clone https://github.com/va1d3mar/attack.git
+	rm -rf attack
+	git clone -b testing https://github.com/va1d3mar/attack.git
 	cd attack
 	ls
 	echo "^ ^ ^ Ось файли, з якими потрібно працювати ^ ^ ^"
