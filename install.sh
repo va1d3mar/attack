@@ -1,13 +1,17 @@
   GNU nano 6.2                                       install.sh *                                              
 echo "Розпочинаємо процедуру інсталяції"
 echo ""
+echo "Спочатку оновимо репозиторії"
+echo ""
 apt update
-apt install apt-transport-https ca-certificates curl software-properties-common tmux nano nload git -y
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-apt update
-apt-cache policy docker-ce
-apt install docker-ce
+echo ""
+echo "Тепер оновимо систему"
+echo ""
+atp upgrade -y
+echo ""
+echo "Настав час встановлення додаткового софту"
+echo ""
+apt install apt-transport-https ca-certificates curl software-properties-common tmux nano nload git htop docker.io -y
 echo ""
 echo "Інсталяцію пакетів завершено, починаю завантаження скриптів атаки"
 echo ""
