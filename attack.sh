@@ -41,7 +41,7 @@ function kill_environment {
 
 function attack {
         command=$(</var/tmp/attack_target)
-        tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & sleep 900 && tmux send-keys -t 0 C-c Enter && sleep 900 && tmux send-keys -t 0 "systemctl restart docker.service" Enter
+        tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & sleep 900 && tmux send-keys -t 0 C-c Enter && sleep 5 && tmux send-keys -t 0 "systemctl restart docker.service" Enter
 }
 
 case $mode in
