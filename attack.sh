@@ -82,6 +82,10 @@ case $mode in
         prepare_command
                 ;;
 
+        update)
+        update
+                ;;
+                
         *)
         write_to_log 'Йа нєпанімаю ваш язік. Пішітє правельно!'
         echo "Йа нєпанімаю ваш язік. Пішітє правельно!"
