@@ -15,8 +15,8 @@ apt install apt-transport-https ca-certificates curl software-properties-common 
 echo ""
 echo "Інсталяцію пакетів завершено, починаю завантаження скриптів атаки"
 echo ""
-cd /etc/
-rm -rf attack
+cd /etc
+rm -rf /etc/attack
 git clone -b testing https://github.com/va1d3mar/attack.git
 echo ""
 echo "alias attack='bash /etc/attack/attack.sh'" >> ~/.bash_aliases
