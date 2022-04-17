@@ -34,7 +34,7 @@ function kill_environment {
         tmux send-keys -t 0 C-c Enter
         tmux kill-session
         rm /var/tmp/attack_target
-        pkill -KILL bash
+        pkill -KILL bash &
         systemctl restart docker.service
 }
 
@@ -52,10 +52,10 @@ function update {
         cd ..
         rm -rf attack
         git clone -b testing https://github.com/va1d3mar/attack.git
-        cd attack
+        cd attack &
         echo 'Оновлення завершено'
         write_to_log 'Проведено оновлення скриптів з Github'
-        kill_environment
+        kill_environment &
 }
 
 case $mode in
