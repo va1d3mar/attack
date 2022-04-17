@@ -17,6 +17,7 @@ Launching under root only.
 bash attack.sh attack 'command' threads &
                change 'command' threads &
                halt
+               update
 
 Use & inthe end of command to put execution to background.
 
