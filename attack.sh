@@ -46,12 +46,12 @@ function attack {
 
 function update {
         echo 'Зупиняю роботу скриптів' 
-        tmux select-window -t attack
-        tmux send-keys -t 0 C-c Enter
+        tmux select-window -t attack &
+        tmux send-keys -t 0 C-c Enter &
         echo 'Виконую оновлення скриптів'
         cd ..
-        rm -rf attack
-        git clone -b testing https://github.com/va1d3mar/attack.git
+        rm -rf attack &
+        git clone -b testing https://github.com/va1d3mar/attack.git &
         cd attack &
         echo 'Оновлення завершено'
         write_to_log 'Проведено оновлення скриптів з Github'
