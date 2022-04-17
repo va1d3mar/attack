@@ -15,12 +15,9 @@ apt install apt-transport-https ca-certificates curl software-properties-common 
 echo ""
 echo "Інсталяцію пакетів завершено, починаю завантаження скриптів атаки"
 echo ""
+cd /etc/
 rm -rf attack
 git clone -b testing https://github.com/va1d3mar/attack.git
-cd attack
 echo ""
-ls
-echo "^ ^ ^ Ось файли, з якими потрібно працювати ^ ^ ^"
-echo "readme.txt тут не просто так, бажано ознайомитися"
-echo ""
+echo "alias attack='bash /etc/attack/attack.sh'" >> ~/.bashrc
 echo "Всьо закінчено, можна атакувати"
