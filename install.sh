@@ -17,7 +17,7 @@ echo "Інсталяцію пакетів завершено, починаю з�
 echo ""
 cd /etc
 rm -rf /etc/attack
-git clone -b testing https://github.com/va1d3mar/attack.git
+git clone https://github.com/va1d3mar/attack.git
 echo ""
 echo "alias attack='bash /etc/attack/attack.sh'" >> ~/.bash_aliases
 echo "Всьо закінчено, можна атакувати"
