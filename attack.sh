@@ -44,6 +44,17 @@ function attack {
         tmux select-window -t attack & tmux send-keys -t 0 "$command" Enter & sleep 900 && tmux send-keys -t 0 C-c Enter && sleep 5 && tmux send-keys -t 0 "systemctl restart docker.service" Enter
 }
 
+function update {
+        echo 'Зупиняю роботу скриптів' 
+        kill_environment
+        echo 'Виконую оновлення скриптів'
+        cd ..
+        rm -rf attack
+        git clone -b testing https://github.com/va1d3mar/attack.git
+        cd attack
+        echo 'Оновлення завершено'
+}
+
 case $mode in
         attack)
         write_to_log 'Аналізую команду'
